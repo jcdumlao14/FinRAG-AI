@@ -1,0 +1,47 @@
+[
+  {
+    "question": "What was Apple's total net sales in fiscal year 2025?",
+    "company": "Apple",
+    "year": 2025
+  },
+  {
+    "question": "What was Microsoft's revenue in fiscal year 2025?",
+    "company": "Microsoft",
+    "year": 2025
+  },
+  {
+    "question": "What was NVIDIA's revenue in fiscal year 2026?",
+    "company": "NVIDIA",
+    "year": 2026
+  },
+  {
+    "question": "What were NVIDIA's research and development expenses in fiscal year 2026?",
+    "company": "NVIDIA",
+    "year": 2026
+  },
+  {
+    "question": "How did Microsoft's operating income change in fiscal year 2025?",
+    "company": "Microsoft",
+    "year": 2025
+  },
+  {
+    "question": "What were Apple's operating expenses in fiscal year 2025?",
+    "company": "Apple",
+    "year": 2025
+  },
+  {
+    "question": "What were NVIDIA's total operating expenses in fiscal year 2026?",
+    "company": "NVIDIA",
+    "year": 2026
+  },
+  {
+    "question": "What was Apple's net income in fiscal year 2025?",
+    "company": "Apple",
+    "year": 2025
+  },
+  {
+    "question": "What was Microsoft's net income in fiscal year 2025?",
+    "company": "Microsoft",
+    "year": 2025
+  }
+]
