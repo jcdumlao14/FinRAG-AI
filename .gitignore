@@ -13,3 +13,7 @@ chroma_db/
 # IDE
 .vscode/
 data/chunks/
+
+data/chunks/embeddings.json
+
+data/chunks/embeddings.json
