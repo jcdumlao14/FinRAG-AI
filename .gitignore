@@ -5,13 +5,11 @@ __pycache__/
 
 # Financial source documents
 data/raw/*.pdf
-
 # Generated/processed data
 data/processed/
 chroma_db/
-
 # Jupyter
 .ipynb_checkpoints/
-
 # IDE
 .vscode/
+data/chunks/
