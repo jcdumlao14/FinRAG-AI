@@ -1,0 +1,17 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+
+# Financial source documents
+data/raw/*.pdf
+
+# Generated/processed data
+data/processed/
+chroma_db/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE
+.vscode/
