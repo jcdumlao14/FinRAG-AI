@@ -68,7 +68,7 @@
         "company": "Microsoft",
         "year": 2025,
         "expected_answer": "$101,832 million",
-        "grounded": false,
-        "matched_rank": null
+        "grounded": true,
+        "matched_rank": 5
     }
 ]

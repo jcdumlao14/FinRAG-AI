@@ -61,6 +61,7 @@ def normalize_text(text):
     return (
         str(text)
         .lower()
+        .replace("\xa0", " ")
         .replace(",", "")
         .replace("$", "")
         .replace(" ", "")
@@ -121,7 +122,7 @@ def answer_found_in_text(
     # --------------------------------------------------------
 
     expected_lower = str(expected_answer).lower()
-    text_lower = str(text).lower()
+    text_lower = str(text).lower().replace("\xa0", " ")
 
     if "million" in expected_lower:
         expected_without_unit = (
