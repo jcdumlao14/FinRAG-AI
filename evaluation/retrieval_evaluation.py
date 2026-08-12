@@ -500,9 +500,7 @@ def main():
     # --------------------------------------------------------
 
     vector_top5 = vector_results[5]
-
     bm25_top5 = bm25_results[5]
-
     hybrid_top5 = hybrid_results[5]
 
     retriever_scores = {
@@ -511,23 +509,33 @@ def main():
         "Hybrid RRF": hybrid_top5,
     }
 
-    best_retriever = max(
-        retriever_scores,
-        key=retriever_scores.get,
+    best_score = max(
+        retriever_scores.values()
     )
 
-    best_score = retriever_scores[
-        best_retriever
+    best_retrievers = [
+        name
+        for name, score in retriever_scores.items()
+        if score == best_score
     ]
 
-    print(
-    f"BEST RETRIEVER: {best_retriever}"
-)
+    if len(best_retrievers) == 1:
+
+        print(
+            f"BEST RETRIEVER: {best_retrievers[0]}"
+        )
+
+    else:
+
+        print(
+            "BEST RETRIEVER: Tie — "
+            + " and ".join(best_retrievers)
+        )
 
     print(
-       f"Best Top-5 Accuracy: {best_score:.2%}"
+        f"Best Top-5 Accuracy: {best_score:.2%}"
     )
-
+    
     # --------------------------------------------------------
     # SUMMARY
     # --------------------------------------------------------
