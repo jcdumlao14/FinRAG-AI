@@ -68,7 +68,6 @@ Chunk: {chunk_id}
         self,
         question: str,
         top_k: int = 5,
-        prompt_template: str = None,
     ):
 
         results = self.retriever.search(
@@ -83,7 +82,6 @@ Chunk: {chunk_id}
         answer = self.llm.generate(
             question=question,
             context=context,
-            prompt_template=prompt_template,
         )
 
         sources = []

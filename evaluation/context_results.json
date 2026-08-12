@@ -4,32 +4,32 @@
         "company": "Apple",
         "year": 2025,
         "expected_answer": "$416,161 million",
-        "grounded": false,
-        "matched_rank": null
+        "grounded": true,
+        "matched_rank": 3
     },
     {
         "question": "What was Microsoft's revenue in fiscal year 2025?",
         "company": "Microsoft",
         "year": 2025,
         "expected_answer": "$281,724 million",
-        "grounded": false,
-        "matched_rank": null
+        "grounded": true,
+        "matched_rank": 2
     },
     {
         "question": "What was NVIDIA's revenue in fiscal year 2026?",
         "company": "NVIDIA",
         "year": 2026,
         "expected_answer": "$215,938 million",
-        "grounded": false,
-        "matched_rank": null
+        "grounded": true,
+        "matched_rank": 2
     },
     {
         "question": "What were NVIDIA's research and development expenses in fiscal year 2026?",
         "company": "NVIDIA",
         "year": 2026,
         "expected_answer": "$18,497 million",
-        "grounded": false,
-        "matched_rank": null
+        "grounded": true,
+        "matched_rank": 1
     },
     {
         "question": "How did Microsoft's operating income change in fiscal year 2025?",
@@ -44,24 +44,24 @@
         "company": "Apple",
         "year": 2025,
         "expected_answer": "$62,151 million",
-        "grounded": false,
-        "matched_rank": null
+        "grounded": true,
+        "matched_rank": 2
     },
     {
         "question": "What were NVIDIA's total operating expenses in fiscal year 2026?",
         "company": "NVIDIA",
         "year": 2026,
         "expected_answer": "$23,076 million",
-        "grounded": false,
-        "matched_rank": null
+        "grounded": true,
+        "matched_rank": 1
     },
     {
         "question": "What was Apple's net income in fiscal year 2025?",
         "company": "Apple",
         "year": 2025,
         "expected_answer": "$112,010 million",
-        "grounded": false,
-        "matched_rank": null
+        "grounded": true,
+        "matched_rank": 1
     },
     {
         "question": "What was Microsoft's net income in fiscal year 2025?",
