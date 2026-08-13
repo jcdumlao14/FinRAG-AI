@@ -1,5 +1,6 @@
-from rag.retriever import FinancialRetriever
+﻿from rag.hybrid_retriever import HybridRetriever
 from llm.generator import FinancialLLM
+
 
 
 class FinRAGPipeline:
@@ -8,7 +9,7 @@ class FinRAGPipeline:
 
         print("Initializing FinRAG AI...")
 
-        self.retriever = FinancialRetriever()
+        self.retriever = HybridRetriever()
         self.llm = FinancialLLM()
 
     def build_context(self, results):
