@@ -52,6 +52,11 @@ is not available in the retrieved documents.
 Always provide a concise explanation and identify
 the company and fiscal year when relevant.
 
+Use clear, professional formatting with normal
+spacing between words, numbers, and currency symbols.
+Do not remove spaces between words or between
+currency symbols and amounts.
+
 User question:
 {question}
 

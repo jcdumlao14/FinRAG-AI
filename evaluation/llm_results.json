@@ -6,7 +6,7 @@
         "expected_answer": "$416,161 million",
         "grounded": true,
         "answer_match": true,
-        "answer": "Apple's total net sales in fiscal year 2025 was $416,161 million. This information is consistently provided across multiple sources (Source 1, 3, 4, and 5) from Apple's 2025 Form 10-K.",
+        "answer": "Apple's total net sales in fiscal year 2025 were $416,161 million. This information is consistently provided across multiple sources, including the Consolidated Statements of Operations and tables detailing net sales by category and by country for Apple's 2025 fiscal year.",
         "sources": [
             {
                 "company": "Apple",
@@ -48,7 +48,7 @@
         "expected_answer": "$281,724 million",
         "grounded": true,
         "answer_match": true,
-        "answer": "Microsoft's total revenue in fiscal year 2025 was $281,724 million. This information is available in the financial context, specifically in the tables for \"Revenue, classified by the major geographic areas\", \"Revenue, classified by significant product and service offerings\", and the \"Total\" section of \"SEGMENT RESULTS OF OPERATIONS\" for Microsoft.",
+        "answer": "Microsoft's total revenue in fiscal year 2025 was $281,724 million (or $281.724 billion).\n\nExplanation:\nAccording to the provided financial context (Source 2, 3, and 5) from Microsoft's 10-K for fiscal year 2025, the total revenue for the year ended June 30, 2025, was $281,724 million.",
         "sources": [
             {
                 "company": "Microsoft",
@@ -90,7 +90,7 @@
         "expected_answer": "$215,938 million",
         "grounded": true,
         "answer_match": true,
-        "answer": "NVIDIA's revenue in fiscal year 2026 was $215,938 million. This information is available in the Consolidated Statements of Income for NVIDIA Corporation and Subsidiaries, Year Ended Jan 25, 2026, as provided in SOURCE 2.",
+        "answer": "NVIDIA's revenue in fiscal year 2026 was $215,938 million.\n\nExplanation:\nAccording to the Consolidated Statements of Income for NVIDIA, the revenue for the year ended January 25, 2026, was $215,938 million (Source 2).",
         "sources": [
             {
                 "company": "NVIDIA",
@@ -132,7 +132,7 @@
         "expected_answer": "$18,497 million",
         "grounded": true,
         "answer_match": true,
-        "answer": "NVIDIA's research and development expenses in fiscal year 2026 were $18,497 million. This information is available in the Consolidated Statements of Income for NVIDIA Corporation and Subsidiaries (Source 1), for the year ended January 25, 2026.",
+        "answer": "NVIDIA's research and development expenses for fiscal year 2026 were $18,497 million.\n\nCompany: NVIDIA\nFiscal Year: 2026\nSource: SOURCE 1 (Consolidated Statements of Income)",
         "sources": [
             {
                 "company": "NVIDIA",
@@ -174,7 +174,7 @@
         "expected_answer": "$19.1 billion increase, or 17%",
         "grounded": true,
         "answer_match": true,
-        "answer": "Microsoft's operating income increased by $19.1 billion or 17% in fiscal year 2025 compared to fiscal year 2024, with growth across all segments (Microsoft, Fiscal Year 2025, microsoft_10k_2025.pdf, Chunk: 533).",
+        "answer": "Microsoft's operating income increased by $19.1 billion or 17% in fiscal year 2025, with growth across each of its segments.\n\nCompany: Microsoft\nFiscal Year: 2025\nSource: microsoft_10k_2025.pdf (Chunk 533)",
         "sources": [
             {
                 "company": "Microsoft",
@@ -216,7 +216,7 @@
         "expected_answer": "$62,151 million",
         "grounded": true,
         "answer_match": true,
-        "answer": "Apple's total operating expenses in fiscal year 2025 were $62,151 million.\n\nExplanation:\nSource 2, under the \"Operating Expenses\" section, provides a table showing operating expenses for Apple Inc. for fiscal year 2025. The \"Total operating expenses\" for 2025 are listed as $62,151 million.",
+        "answer": "Apple's total operating expenses for fiscal year 2025 were $62,151 million.\n\nThis information is from Apple Inc.'s 2025 Form 10-K, under the Operating Expenses section.",
         "sources": [
             {
                 "company": "Apple",
@@ -258,7 +258,7 @@
         "expected_answer": "$23,076 million",
         "grounded": true,
         "answer_match": true,
-        "answer": "NVIDIA's total operating expenses in fiscal year 2026 were $23,076 million.\n\nThis information is available in the Consolidated Statements of Income for NVIDIA, Year Ended Jan 25, 2026 (Source 1).",
+        "answer": "NVIDIA's total operating expenses in fiscal year 2026 were $23,076 million.\n\nExplanation:\nAccording to NVIDIA Corporation and Subsidiaries' Consolidated Statements of Income for the year ended January 25, 2026, the total operating expenses were $23,076 million.",
         "sources": [
             {
                 "company": "NVIDIA",
@@ -300,7 +300,7 @@
         "expected_answer": "$112,010 million",
         "grounded": true,
         "answer_match": true,
-        "answer": "Apple's net income in fiscal year 2025 was $112,010 million.\n\nExplanation:\nAccording to the Consolidated Statements of Operations and Consolidated Statements of Comprehensive Income (Source 1 and Source 3), Apple reported a Net income of $112,010 million for the year ended September 27, 2025.",
+        "answer": "Apple's net income in fiscal year 2025 was $112,010 million.\n\nThis information is from Apple Inc.'s Consolidated Statements of Operations and Consolidated Statements of Comprehensive Income for the fiscal year ended September 27, 2025 (Source 1 and Source 3).",
         "sources": [
             {
                 "company": "Apple",
@@ -342,7 +342,7 @@
         "expected_answer": "$101,832 million",
         "grounded": true,
         "answer_match": true,
-        "answer": "Microsoft's net income for fiscal year 2025 was $101,832 million.\n\nExplanation:\nSOURCE 5, under \"SUMMARY RESULTS OF OPERATIONS,\" lists Net income for Microsoft in fiscal year 2025 as $101,832 million.",
+        "answer": "Microsoft's net income in fiscal year 2025 was $101,832 million.\n\nExplanation:\nAccording to Microsoft's summary results of operations for fiscal year 2025, net income was reported as $101,832 million (Source 5).",
         "sources": [
             {
                 "company": "Microsoft",
