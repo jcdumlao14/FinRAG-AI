@@ -535,6 +535,59 @@ def main():
     print(
         f"Best Top-5 Accuracy: {best_score:.2%}"
     )
+
+    # --------------------------------------------------------
+    # SAVE RESULTS
+    # --------------------------------------------------------
+
+    results_path = (
+        PROJECT_ROOT
+        / "evaluation"
+        / "retrieval_results.json"
+    )
+
+    retrieval_results = {
+        "evaluation_questions": len(questions),
+        "vector_search": {
+            "top_1": vector_results[1],
+            "top_3": vector_results[3],
+            "top_5": vector_results[5],
+        },
+        "bm25": {
+            "top_1": bm25_results[1],
+            "top_3": bm25_results[3],
+            "top_5": bm25_results[5],
+        },
+        "hybrid_rrf": {
+            "top_1": hybrid_results[1],
+            "top_3": hybrid_results[3],
+            "top_5": hybrid_results[5],
+        },
+        "best_retriever": best_retrievers,
+        "best_top_5_accuracy": best_score,
+    }
+
+    with open(
+        results_path,
+        "w",
+        encoding="utf-8",
+    ) as f:
+
+        json.dump(
+            retrieval_results,
+            f,
+            indent=4,
+            ensure_ascii=False,
+        )
+
+    print(
+        "\nRetrieval results saved to:"
+    )
+
+    print(
+        results_path
+    )
+
     
     # --------------------------------------------------------
     # SUMMARY

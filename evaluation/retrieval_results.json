@@ -1,0 +1,23 @@
+{
+    "evaluation_questions": 9,
+    "vector_search": {
+        "top_1": 1.0,
+        "top_3": 1.0,
+        "top_5": 1.0
+    },
+    "bm25": {
+        "top_1": 0.7777777777777778,
+        "top_3": 0.8888888888888888,
+        "top_5": 0.8888888888888888
+    },
+    "hybrid_rrf": {
+        "top_1": 1.0,
+        "top_3": 1.0,
+        "top_5": 1.0
+    },
+    "best_retriever": [
+        "Vector Search",
+        "Hybrid RRF"
+    ],
+    "best_top_5_accuracy": 1.0
+}
