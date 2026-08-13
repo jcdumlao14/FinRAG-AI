@@ -4,10 +4,377 @@
         "company": "Apple",
         "year": 2025,
         "expected_answer": "$416,161 million",
-        "grounded": false,
-        "answer_match": false,
-        "answer": null,
-        "sources": [],
-        "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\\nPlease retry in 45.749555495s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '45s'}]}}"
+        "grounded": true,
+        "answer_match": true,
+        "answer": "Apple's total net sales in fiscal year 2025 was $416,161 million. This information is consistently provided across multiple sources (Source 1, 3, 4, and 5) from Apple's 2025 Form 10-K.",
+        "sources": [
+            {
+                "company": "Apple",
+                "year": "2025",
+                "filename": "apple_10k_2025.pdf",
+                "chunk_id": "137"
+            },
+            {
+                "company": "Apple",
+                "year": "2025",
+                "filename": "apple_10k_2025.pdf",
+                "chunk_id": "136"
+            },
+            {
+                "company": "Apple",
+                "year": "2025",
+                "filename": "apple_10k_2025.pdf",
+                "chunk_id": "220"
+            },
+            {
+                "company": "Apple",
+                "year": "2025",
+                "filename": "apple_10k_2025.pdf",
+                "chunk_id": "177"
+            },
+            {
+                "company": "Apple",
+                "year": "2025",
+                "filename": "apple_10k_2025.pdf",
+                "chunk_id": "158"
+            }
+        ],
+        "error": null
+    },
+    {
+        "question": "What was Microsoft's revenue in fiscal year 2025?",
+        "company": "Microsoft",
+        "year": 2025,
+        "expected_answer": "$281,724 million",
+        "grounded": true,
+        "answer_match": true,
+        "answer": "Microsoft's total revenue in fiscal year 2025 was $281,724 million. This information is available in the financial context, specifically in the tables for \"Revenue, classified by the major geographic areas\", \"Revenue, classified by significant product and service offerings\", and the \"Total\" section of \"SEGMENT RESULTS OF OPERATIONS\" for Microsoft.",
+        "sources": [
+            {
+                "company": "Microsoft",
+                "year": "2025",
+                "filename": "microsoft_10k_2025.pdf",
+                "chunk_id": "518"
+            },
+            {
+                "company": "Microsoft",
+                "year": "2025",
+                "filename": "microsoft_10k_2025.pdf",
+                "chunk_id": "696"
+            },
+            {
+                "company": "Microsoft",
+                "year": "2025",
+                "filename": "microsoft_10k_2025.pdf",
+                "chunk_id": "697"
+            },
+            {
+                "company": "Microsoft",
+                "year": "2025",
+                "filename": "microsoft_10k_2025.pdf",
+                "chunk_id": "533"
+            },
+            {
+                "company": "Microsoft",
+                "year": "2025",
+                "filename": "microsoft_10k_2025.pdf",
+                "chunk_id": "534"
+            }
+        ],
+        "error": null
+    },
+    {
+        "question": "What was NVIDIA's revenue in fiscal year 2026?",
+        "company": "NVIDIA",
+        "year": 2026,
+        "expected_answer": "$215,938 million",
+        "grounded": true,
+        "answer_match": true,
+        "answer": "NVIDIA's revenue in fiscal year 2026 was $215,938 million. This information is available in the Consolidated Statements of Income for NVIDIA Corporation and Subsidiaries, Year Ended Jan 25, 2026, as provided in SOURCE 2.",
+        "sources": [
+            {
+                "company": "NVIDIA",
+                "year": "2026",
+                "filename": "nvidia_10k_2026.pdf",
+                "chunk_id": "1684"
+            },
+            {
+                "company": "NVIDIA",
+                "year": "2026",
+                "filename": "nvidia_10k_2026.pdf",
+                "chunk_id": "1617"
+            },
+            {
+                "company": "NVIDIA",
+                "year": "2026",
+                "filename": "nvidia_10k_2026.pdf",
+                "chunk_id": "1721"
+            },
+            {
+                "company": "NVIDIA",
+                "year": "2026",
+                "filename": "nvidia_10k_2026.pdf",
+                "chunk_id": "1725"
+            },
+            {
+                "company": "NVIDIA",
+                "year": "2026",
+                "filename": "nvidia_10k_2026.pdf",
+                "chunk_id": "1005"
+            }
+        ],
+        "error": null
+    },
+    {
+        "question": "What were NVIDIA's research and development expenses in fiscal year 2026?",
+        "company": "NVIDIA",
+        "year": 2026,
+        "expected_answer": "$18,497 million",
+        "grounded": true,
+        "answer_match": true,
+        "answer": "NVIDIA's research and development expenses in fiscal year 2026 were $18,497 million. This information is available in the Consolidated Statements of Income for NVIDIA Corporation and Subsidiaries (Source 1), for the year ended January 25, 2026.",
+        "sources": [
+            {
+                "company": "NVIDIA",
+                "year": "2026",
+                "filename": "nvidia_10k_2026.pdf",
+                "chunk_id": "1617"
+            },
+            {
+                "company": "NVIDIA",
+                "year": "2026",
+                "filename": "nvidia_10k_2026.pdf",
+                "chunk_id": "1684"
+            },
+            {
+                "company": "NVIDIA",
+                "year": "2026",
+                "filename": "nvidia_10k_2026.pdf",
+                "chunk_id": "1692"
+            },
+            {
+                "company": "NVIDIA",
+                "year": "2026",
+                "filename": "nvidia_10k_2026.pdf",
+                "chunk_id": "1721"
+            },
+            {
+                "company": "NVIDIA",
+                "year": "2026",
+                "filename": "nvidia_10k_2026.pdf",
+                "chunk_id": "992"
+            }
+        ],
+        "error": null
+    },
+    {
+        "question": "How did Microsoft's operating income change in fiscal year 2025?",
+        "company": "Microsoft",
+        "year": 2025,
+        "expected_answer": "$19.1 billion increase, or 17%",
+        "grounded": true,
+        "answer_match": true,
+        "answer": "Microsoft's operating income increased by $19.1 billion or 17% in fiscal year 2025 compared to fiscal year 2024, with growth across all segments (Microsoft, Fiscal Year 2025, microsoft_10k_2025.pdf, Chunk: 533).",
+        "sources": [
+            {
+                "company": "Microsoft",
+                "year": "2025",
+                "filename": "microsoft_10k_2025.pdf",
+                "chunk_id": "590"
+            },
+            {
+                "company": "Microsoft",
+                "year": "2025",
+                "filename": "microsoft_10k_2025.pdf",
+                "chunk_id": "516"
+            },
+            {
+                "company": "Microsoft",
+                "year": "2025",
+                "filename": "microsoft_10k_2025.pdf",
+                "chunk_id": "518"
+            },
+            {
+                "company": "Microsoft",
+                "year": "2025",
+                "filename": "microsoft_10k_2025.pdf",
+                "chunk_id": "527"
+            },
+            {
+                "company": "Microsoft",
+                "year": "2025",
+                "filename": "microsoft_10k_2025.pdf",
+                "chunk_id": "533"
+            }
+        ],
+        "error": null
+    },
+    {
+        "question": "What were Apple's operating expenses in fiscal year 2025?",
+        "company": "Apple",
+        "year": 2025,
+        "expected_answer": "$62,151 million",
+        "grounded": true,
+        "answer_match": true,
+        "answer": "Apple's total operating expenses in fiscal year 2025 were $62,151 million.\n\nExplanation:\nSource 2, under the \"Operating Expenses\" section, provides a table showing operating expenses for Apple Inc. for fiscal year 2025. The \"Total operating expenses\" for 2025 are listed as $62,151 million.",
+        "sources": [
+            {
+                "company": "Apple",
+                "year": "2025",
+                "filename": "apple_10k_2025.pdf",
+                "chunk_id": "141"
+            },
+            {
+                "company": "Apple",
+                "year": "2025",
+                "filename": "apple_10k_2025.pdf",
+                "chunk_id": "140"
+            },
+            {
+                "company": "Apple",
+                "year": "2025",
+                "filename": "apple_10k_2025.pdf",
+                "chunk_id": "131"
+            },
+            {
+                "company": "Apple",
+                "year": "2025",
+                "filename": "apple_10k_2025.pdf",
+                "chunk_id": "192"
+            },
+            {
+                "company": "Apple",
+                "year": "2025",
+                "filename": "apple_10k_2025.pdf",
+                "chunk_id": "341"
+            }
+        ],
+        "error": null
+    },
+    {
+        "question": "What were NVIDIA's total operating expenses in fiscal year 2026?",
+        "company": "NVIDIA",
+        "year": 2026,
+        "expected_answer": "$23,076 million",
+        "grounded": true,
+        "answer_match": true,
+        "answer": "NVIDIA's total operating expenses in fiscal year 2026 were $23,076 million.\n\nThis information is available in the Consolidated Statements of Income for NVIDIA, Year Ended Jan 25, 2026 (Source 1).",
+        "sources": [
+            {
+                "company": "NVIDIA",
+                "year": "2026",
+                "filename": "nvidia_10k_2026.pdf",
+                "chunk_id": "1617"
+            },
+            {
+                "company": "NVIDIA",
+                "year": "2026",
+                "filename": "nvidia_10k_2026.pdf",
+                "chunk_id": "1721"
+            },
+            {
+                "company": "NVIDIA",
+                "year": "2026",
+                "filename": "nvidia_10k_2026.pdf",
+                "chunk_id": "1684"
+            },
+            {
+                "company": "NVIDIA",
+                "year": "2026",
+                "filename": "nvidia_10k_2026.pdf",
+                "chunk_id": "1692"
+            },
+            {
+                "company": "NVIDIA",
+                "year": "2026",
+                "filename": "nvidia_10k_2026.pdf",
+                "chunk_id": "1706"
+            }
+        ],
+        "error": null
+    },
+    {
+        "question": "What was Apple's net income in fiscal year 2025?",
+        "company": "Apple",
+        "year": 2025,
+        "expected_answer": "$112,010 million",
+        "grounded": true,
+        "answer_match": true,
+        "answer": "Apple's net income in fiscal year 2025 was $112,010 million.\n\nExplanation:\nAccording to the Consolidated Statements of Operations and Consolidated Statements of Comprehensive Income (Source 1 and Source 3), Apple reported a Net income of $112,010 million for the year ended September 27, 2025.",
+        "sources": [
+            {
+                "company": "Apple",
+                "year": "2025",
+                "filename": "apple_10k_2025.pdf",
+                "chunk_id": "159"
+            },
+            {
+                "company": "Apple",
+                "year": "2025",
+                "filename": "apple_10k_2025.pdf",
+                "chunk_id": "141"
+            },
+            {
+                "company": "Apple",
+                "year": "2025",
+                "filename": "apple_10k_2025.pdf",
+                "chunk_id": "158"
+            },
+            {
+                "company": "Apple",
+                "year": "2025",
+                "filename": "apple_10k_2025.pdf",
+                "chunk_id": "192"
+            },
+            {
+                "company": "Apple",
+                "year": "2025",
+                "filename": "apple_10k_2025.pdf",
+                "chunk_id": "156"
+            }
+        ],
+        "error": null
+    },
+    {
+        "question": "What was Microsoft's net income in fiscal year 2025?",
+        "company": "Microsoft",
+        "year": 2025,
+        "expected_answer": "$101,832 million",
+        "grounded": true,
+        "answer_match": true,
+        "answer": "Microsoft's net income for fiscal year 2025 was $101,832 million.\n\nExplanation:\nSOURCE 5, under \"SUMMARY RESULTS OF OPERATIONS,\" lists Net income for Microsoft in fiscal year 2025 as $101,832 million.",
+        "sources": [
+            {
+                "company": "Microsoft",
+                "year": "2025",
+                "filename": "microsoft_10k_2025.pdf",
+                "chunk_id": "518"
+            },
+            {
+                "company": "Microsoft",
+                "year": "2025",
+                "filename": "microsoft_10k_2025.pdf",
+                "chunk_id": "542"
+            },
+            {
+                "company": "Microsoft",
+                "year": "2025",
+                "filename": "microsoft_10k_2025.pdf",
+                "chunk_id": "697"
+            },
+            {
+                "company": "Microsoft",
+                "year": "2025",
+                "filename": "microsoft_10k_2025.pdf",
+                "chunk_id": "533"
+            },
+            {
+                "company": "Microsoft",
+                "year": "2025",
+                "filename": "microsoft_10k_2025.pdf",
+                "chunk_id": "532"
+            }
+        ],
+        "error": null
     }
 ]
