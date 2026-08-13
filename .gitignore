@@ -17,3 +17,9 @@ data/chunks/
 data/chunks/embeddings.json
 
 data/chunks/embeddings.json
+
+# Runtime monitoring data
+monitoring/feedback.json
+
+# Runtime monitoring data
+monitoring/feedback.json

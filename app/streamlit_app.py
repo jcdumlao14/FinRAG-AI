@@ -17,6 +17,7 @@ sys.path.insert(
 
 
 from rag.pipeline import FinRAGPipeline
+from monitoring.feedback import save_feedback
 
 
 # ============================================================
@@ -131,6 +132,31 @@ with st.sidebar:
 
 
 # ============================================================
+# SESSION STATE
+# ============================================================
+
+if "last_result" not in st.session_state:
+
+    st.session_state[
+        "last_result"
+    ] = None
+
+
+if "last_question" not in st.session_state:
+
+    st.session_state[
+        "last_question"
+    ] = ""
+
+
+if "feedback" not in st.session_state:
+
+    st.session_state[
+        "feedback"
+    ] = None
+
+
+# ============================================================
 # QUESTION INPUT
 # ============================================================
 
@@ -204,6 +230,18 @@ if ask_button:
                     top_k=5,
                 )
 
+                st.session_state[
+                    "last_result"
+                ] = result
+
+                st.session_state[
+                    "last_question"
+                ] = question.strip()
+
+                st.session_state[
+                    "feedback"
+                ] = None
+
             except Exception as error:
 
                 st.error(
@@ -215,110 +253,156 @@ if ask_button:
                 st.stop()
 
 
-        # ----------------------------------------------------
-        # ANSWER
-        # ----------------------------------------------------
+# ============================================================
+# DISPLAY LAST ANSWER
+# ============================================================
 
-        st.subheader(
-            "💡 Answer"
-        )
+result = st.session_state.get(
+    "last_result"
+)
 
-        st.success(
-            result["answer"]
-        )
+last_question = st.session_state.get(
+    "last_question",
+)
 
 
-        # ----------------------------------------------------
-        # SOURCES
-        # ----------------------------------------------------
+if result is not None:
 
-        st.subheader(
-            "📚 Retrieved Sources"
-        )
+    # --------------------------------------------------------
+    # ANSWER
+    # --------------------------------------------------------
 
-        sources = result.get(
-            "sources",
-            [],
-        )
+    st.subheader(
+        "💡 Answer"
+    )
 
-        if sources:
+    st.success(
+        result["answer"]
+    )
 
-            for i, source in enumerate(
-                sources,
-                start=1,
+
+    # --------------------------------------------------------
+    # SOURCES
+    # --------------------------------------------------------
+
+    st.subheader(
+        "📚 Retrieved Sources"
+    )
+
+    sources = result.get(
+        "sources",
+        [],
+    )
+
+    if sources:
+
+        for i, source in enumerate(
+            sources,
+            start=1,
+        ):
+
+            with st.expander(
+                f"Source {i}: "
+                f"{source.get('company', 'Unknown')} "
+                f"({source.get('year', 'Unknown')})"
             ):
 
-                with st.expander(
-                    f"Source {i}: "
-                    f"{source.get('company', 'Unknown')} "
-                    f"({source.get('year', 'Unknown')})"
-                ):
+                st.write(
+                    f"**Company:** "
+                    f"{source.get('company', 'Unknown')}"
+                )
 
-                    st.write(
-                        f"**Company:** "
-                        f"{source.get('company', 'Unknown')}"
-                    )
+                st.write(
+                    f"**Fiscal Year:** "
+                    f"{source.get('year', 'Unknown')}"
+                )
 
-                    st.write(
-                        f"**Fiscal Year:** "
-                        f"{source.get('year', 'Unknown')}"
-                    )
+                st.write(
+                    f"**Document:** "
+                    f"`{source.get('filename', 'Unknown')}`"
+                )
 
-                    st.write(
-                        f"**Document:** "
-                        f"`{source.get('filename', 'Unknown')}`"
-                    )
+                st.write(
+                    f"**Chunk:** "
+                    f"`{source.get('chunk_id', 'Unknown')}`"
+                )
 
-                    st.write(
-                        f"**Chunk:** "
-                        f"`{source.get('chunk_id', 'Unknown')}`"
-                    )
+    else:
 
-        else:
+        st.info(
+            "No source information was returned."
+        )
 
-            st.info(
-                "No source information was returned."
+
+    # --------------------------------------------------------
+    # FEEDBACK
+    # --------------------------------------------------------
+
+    st.divider()
+
+    st.subheader(
+        "📝 Was this answer helpful?"
+    )
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+
+        if st.button(
+            "👍 Helpful",
+            use_container_width=True,
+            key="positive_feedback",
+        ):
+
+            save_feedback(
+                question=last_question,
+                answer=result["answer"],
+                feedback="positive",
+                sources=sources,
             )
 
+            st.session_state[
+                "feedback"
+            ] = "positive"
 
-        # ----------------------------------------------------
-        # FEEDBACK
-        # ----------------------------------------------------
+    with col2:
 
-        st.divider()
+        if st.button(
+            "👎 Not Helpful",
+            use_container_width=True,
+            key="negative_feedback",
+        ):
 
-        st.subheader(
-            "📝 Was this answer helpful?"
+            save_feedback(
+                question=last_question,
+                answer=result["answer"],
+                feedback="negative",
+                sources=sources,
+            )
+
+            st.session_state[
+                "feedback"
+            ] = "negative"
+
+
+    # --------------------------------------------------------
+    # FEEDBACK CONFIRMATION
+    # --------------------------------------------------------
+
+    if st.session_state.get(
+        "feedback"
+    ) == "positive":
+
+        st.success(
+            "Thank you for your feedback! "
+            "Your response has been recorded."
         )
 
-        col1, col2 = st.columns(2)
+    elif st.session_state.get(
+        "feedback"
+    ) == "negative":
 
-        with col1:
-
-            if st.button(
-                "👍 Helpful",
-                use_container_width=True,
-            ):
-
-                st.session_state[
-                    "feedback"
-                ] = "positive"
-
-                st.success(
-                    "Thank you for your feedback!"
-                )
-
-        with col2:
-
-            if st.button(
-                "👎 Not Helpful",
-                use_container_width=True,
-            ):
-
-                st.session_state[
-                    "feedback"
-                ] = "negative"
-
-                st.info(
-                    "Thank you. Your feedback helps improve FinRAG AI."
-                )
+        st.info(
+            "Thank you. Your feedback has been recorded "
+            "and will help improve FinRAG AI."
+        )
