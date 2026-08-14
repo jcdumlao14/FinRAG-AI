@@ -1,0 +1,16 @@
+.git
+.gitignore
+.venv
+__pycache__
+*.pyc
+.env
+
+chroma_db
+data/raw
+data/processed
+
+monitoring/feedback.json
+
+*.log
+.vscode
+.ipynb_checkpoints
