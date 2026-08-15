@@ -1,4 +1,4 @@
-﻿from rag.hybrid_retriever import HybridRetriever
+from rag.hybrid_retriever import HybridRetriever
 from llm.generator import FinancialLLM
 
 
@@ -68,7 +68,7 @@ Chunk: {chunk_id}
     def answer(
         self,
         question: str,
-        top_k: int = 5,
+        top_k: int = 10,
     ):
 
         results = self.retriever.search(
