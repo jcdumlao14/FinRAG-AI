@@ -78,4 +78,3 @@ if __name__ == "__main__":
         print(f"BM25 Score: {result['bm25_score']:.4f}")
         print("\nText:")
         print(result["text"][:1000])
-}
