@@ -173,24 +173,40 @@ evaluation/retrieval_results.json
 
 The detailed Hybrid RRF quality evaluation confirms that the correct evidence is consistently ranked first, while also making minor cross-company retrieval contamination visible.
 
-LLM Evaluation
+## LLM Evaluation
 
 FinRAG-AI also evaluates the generated answers using a dedicated LLM evaluation pipeline.
 
 The evaluation considers whether the generated answer:
 
-contains the expected financial answer
-is grounded in retrieved context
-avoids unsupported financial claims
-provides relevant source information
+- contains the expected financial answer
+- is grounded in retrieved context
+- avoids unsupported financial claims
+- provides relevant source information
+
+### LLM Evaluation Results
+
+The current LLM evaluation contains 9 financial questions.
+
+| Metric | Result |
+|--------|-------:|
+| Evaluation questions | **9** |
+| Grounded answers | **9/9 (100.00%)** |
+| Answer matches | **9/9 (100.00%)** |
+| Errors | **0** |
+| Grounding rate | **100.00%** |
+| Answer accuracy | **100.00%** |
+
+The LLM evaluation achieved **100.00% grounding** and **100.00% answer accuracy** across all 9 evaluation questions, with **zero evaluation errors**.
 
 Evaluation artifacts are stored in:
-evaluation/context_results.json
-evaluation/llm_results.json
+
+- `evaluation/context_results.json`
+- `evaluation/llm_results.json`
 
 The evaluation questions are stored in:
 
-evaluation/questions.json
+`evaluation/questions.json`
 
 Grounded Answering
 
