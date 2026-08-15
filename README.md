@@ -129,29 +129,49 @@ Retrieval Evaluation
 The retrieval system was evaluated using 9 financial questions.
 
 The evaluation checks whether the retrieved result belongs to the expected company and fiscal year.
-Results
-| Retriever     |       Top-1 |       Top-3 |       Top-5 |
-| ------------- | ----------: | ----------: | ----------: |
+
+### Retrieval Accuracy
+
+| Retriever     | Top-1 | Top-3 | Top-5 |
+|---------------|------:|------:|------:|
 | Vector Search | **100.00%** | **100.00%** | **100.00%** |
-| BM25          |      77.78% |      88.89% |      88.89% |
+| BM25          | 77.78% | 88.89% | 88.89% |
 | Hybrid RRF    | **100.00%** | **100.00%** | **100.00%** |
-Interpretation
+
+### Hybrid Retrieval Quality
+
+A separate Hybrid RRF quality evaluation measures precision and ranking quality:
+
+| Metric | Result |
+|--------|-------:|
+| Precision@1 | **100.00%** |
+| Precision@3 | 88.89% |
+| Precision@5 | 88.89% |
+| MRR | **1.0000** |
+
+The Hybrid RRF retriever ranked the expected company/year evidence at **rank 1 for all 9 evaluation questions**, resulting in an MRR of 1.0000.
+
+Some Top-3 and Top-5 results contained documents from another company. These represent minor retrieval contamination, but they did not prevent the correct evidence from being ranked first.
+
+### Interpretation
 
 Vector Search achieved perfect retrieval accuracy across all evaluated cutoff levels.
 
 Hybrid RRF also achieved:
 
-100% Top-1
-100% Top-3
-100% Top-5
+- 100% Top-1
+- 100% Top-3
+- 100% Top-5
 
 BM25 performed well but was less reliable on several questions.
 
 For the current 9-question evaluation set, Vector Search and Hybrid RRF tie for the best Top-5 retrieval accuracy at 100%.
 
-The complete results are stored in:
+The complete retrieval results are stored in:
 
 evaluation/retrieval_results.json
+
+The detailed Hybrid RRF quality evaluation confirms that the correct evidence is consistently ranked first, while also making minor cross-company retrieval contamination visible.
 
 LLM Evaluation
 
