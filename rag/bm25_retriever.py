@@ -1,4 +1,4 @@
-import json
+﻿import json
 import re
 from pathlib import Path
 
@@ -32,13 +32,17 @@ def build_bm25():
     return bm25, chunks
 
 
-def search(query, top_k=5):
-    """Search the financial document collection using BM25."""
-    bm25, chunks = build_bm25()
+# Build the BM25 index once when the module is imported.
+# Subsequent searches reuse the in-memory index instead of
+# rebuilding it for every query.
+BM25_INDEX, BM25_CHUNKS = build_bm25()
 
+
+def search(query, top_k=5):
+    """Search the pre-built BM25 index."""
     query_tokens = tokenize(query)
 
-    scores = bm25.get_scores(query_tokens)
+    scores = BM25_INDEX.get_scores(query_tokens)
 
     ranked_indices = sorted(
         range(len(scores)),
@@ -49,7 +53,7 @@ def search(query, top_k=5):
     results = []
 
     for index in ranked_indices:
-        chunk = chunks[index].copy()
+        chunk = BM25_CHUNKS[index].copy()
         chunk["bm25_score"] = float(scores[index])
         results.append(chunk)
 
@@ -74,3 +78,4 @@ if __name__ == "__main__":
         print(f"BM25 Score: {result['bm25_score']:.4f}")
         print("\nText:")
         print(result["text"][:1000])
+}
