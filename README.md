@@ -111,6 +111,7 @@ The project implements the major components required for an end-to-end RAG appli
                  │     UI       │    │  Monitoring   │
                  └──────────────┘    └──────────────┘
 
+---
 📚 Knowledge Base
 
 The current evaluation knowledge base contains financial reports for:
