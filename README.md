@@ -1,515 +1,633 @@
-﻿# FinRAG-AI
+﻿# 📊 FinRAG AI
 
-**Financial Research Assistant using Retrieval-Augmented Generation (RAG)**
+## Financial Research Assistant with Hybrid Retrieval and Grounded Generation
 
-FinRAG-AI is a financial question-answering system built as part of the **LLM Zoomcamp 2026** project. It combines semantic vector search, BM25 lexical retrieval, Reciprocal Rank Fusion (RRF), and Gemini 2.5 Flash to answer questions about company financial reports.
+FinRAG AI is an end-to-end **Retrieval-Augmented Generation (RAG)** application designed to answer questions about company financial reports.
 
-The system is designed to provide **grounded financial answers from retrieved documents** rather than relying solely on the language model's internal knowledge.
+The system combines **semantic vector search**, **BM25 lexical retrieval**, and **Hybrid Reciprocal Rank Fusion (RRF)** to retrieve relevant financial evidence before generating an answer with **Google Gemini 2.5 Flash**.
 
----
+The project was built as a complete RAG application covering the full lifecycle:
 
-## Project Overview
-
-Financial reports contain large amounts of structured and unstructured information, making it difficult to efficiently locate specific financial figures.
-
-FinRAG-AI addresses this problem by building a Retrieval-Augmented Generation pipeline that:
-
-1. Ingests financial 10-K reports.
-2. Extracts and processes document text.
-3. Splits documents into searchable chunks.
-4. Generates vector embeddings.
-5. Stores embeddings in ChromaDB.
-6. Performs semantic vector retrieval.
-7. Performs BM25 lexical retrieval.
-8. Combines retrieval results using Reciprocal Rank Fusion (RRF).
-9. Sends the retrieved financial context to Gemini 2.5 Flash.
-10. Generates an answer grounded in the retrieved documents.
-11. Provides source information for the retrieved evidence.
-12. Evaluates retrieval and LLM answer quality.
+**Data → Ingestion → Chunking → Knowledge Base → Retrieval → Hybrid Search → LLM Generation → Evaluation → User Interface → Feedback → Monitoring → Docker**
 
 ---
 
-## Architecture
+## 🎯 Problem Description
+
+Financial reports such as annual reports and 10-K filings contain large amounts of detailed financial information. Finding a specific figure or explanation manually can be time-consuming, especially when users need to compare financial information across companies and fiscal years.
+
+Traditional keyword search can miss semantically related information, while pure vector search may fail when exact financial terms, company names, years, or numerical concepts are important.
+
+FinRAG AI addresses this problem by combining:
+
+- **Vector retrieval** for semantic similarity
+- **BM25 retrieval** for exact lexical matching
+- **Reciprocal Rank Fusion (RRF)** for combining retrieval signals
+- **LLM generation** for producing natural-language answers
+- **Source attribution** so users can inspect the retrieved evidence
+- **Evaluation pipelines** to measure retrieval and answer quality
+
+The goal is to provide a financial research assistant that produces **grounded answers from the indexed financial documents instead of relying only on the LLM's internal knowledge**.
+
+---
+
+# 🚀 Project Objectives
+
+The project implements the major components required for an end-to-end RAG application:
+
+- Build a searchable financial knowledge base
+- Ingest financial reports
+- Clean and chunk documents
+- Store document representations for retrieval
+- Implement semantic vector retrieval
+- Implement lexical BM25 retrieval
+- Combine retrieval methods using Hybrid RRF
+- Generate grounded answers using Gemini 2.5 Flash
+- Evaluate retrieval quality
+- Evaluate final LLM answers
+- Provide a user-facing Streamlit application
+- Collect user feedback
+- Provide monitoring functionality
+- Containerize the application with Docker Compose
+- Document reproducible setup and execution
+
+---
+
+# 🏗️ Architecture
 
 ```text
-                    Financial 10-K Reports
-                             |
-                             v
-                    +----------------+
-                    | Document       |
-                    | Ingestion      |
-                    +----------------+
-                             |
-                             v
-                    +----------------+
-                    | Text           |
-                    | Processing     |
-                    +----------------+
-                             |
-                             v
-                    +----------------+
-                    | Chunking       |
-                    +----------------+
-                             |
-                  +----------+----------+
-                  |                     |
-                  v                     v
-          +---------------+     +---------------+
-          | Embeddings    |     | BM25 Index    |
-          +---------------+     +---------------+
-                  |                     |
-                  v                     v
-          +---------------+     +---------------+
-          | ChromaDB      |     | BM25 Search   |
-          +---------------+     +---------------+
-                  |                     |
-                  +----------+----------+
-                             |
-                             v
-                    +----------------+
-                    | Hybrid RRF     |
-                    | Retrieval      |
-                    +----------------+
-                             |
-                             v
-                    Retrieved Context
-                             |
-                             v
-                    +----------------+
-                    | Gemini         |
-                    | 2.5 Flash      |
-                    +----------------+
-                             |
-                             v
-                    Grounded Answer
-                             |
-                             v
-                    Sources / Evidence
-Data
+                         ┌──────────────────────┐
+                         │   Financial Reports  │
+                         │   PDF / Documents    │
+                         └──────────┬───────────┘
+                                    │
+                                    ▼
+                         ┌──────────────────────┐
+                         │   Ingestion Pipeline │
+                         │   Cleaning / Chunking│
+                         └──────────┬───────────┘
+                                    │
+                                    ▼
+                         ┌──────────────────────┐
+                         │   Knowledge Base     │
+                         │      ChromaDB        │
+                         └──────────┬───────────┘
+                                    │
+                         User Query │
+                                    ▼
+                    ┌─────────────────────────────┐
+                    │       Retrieval Layer       │
+                    ├─────────────────────────────┤
+                    │ Vector Search                │
+                    │ BM25 Lexical Search         │
+                    └──────────────┬──────────────┘
+                                   │
+                                   ▼
+                    ┌─────────────────────────────┐
+                    │ Hybrid Reciprocal Rank      │
+                    │ Fusion (RRF)                 │
+                    └──────────────┬──────────────┘
+                                   │
+                                   ▼
+                    ┌─────────────────────────────┐
+                    │ Retrieved Financial Context │
+                    └──────────────┬──────────────┘
+                                   │
+                                   ▼
+                    ┌─────────────────────────────┐
+                    │      Gemini 2.5 Flash        │
+                    │      Grounded Generation     │
+                    └──────────────┬──────────────┘
+                                   │
+                                   ▼
+                    ┌─────────────────────────────┐
+                    │     Answer + Sources        │
+                    └──────────────┬──────────────┘
+                                   │
+                         ┌─────────┴─────────┐
+                         ▼                   ▼
+                 ┌──────────────┐    ┌──────────────┐
+                 │  Streamlit   │    │   Feedback /  │
+                 │     UI       │    │  Monitoring   │
+                 └──────────────┘    └──────────────┘
 
-The current evaluation corpus contains financial reports for:
-| Company   | Fiscal Year | Document                 |
-| --------- | ----------: | ------------------------ |
-| Apple     |        2025 | `apple_10k_2025.pdf`     |
-| Microsoft |        2025 | `microsoft_10k_2025.pdf` |
-| NVIDIA    |        2026 | `nvidia_10k_2026.pdf`    |
+📚 Knowledge Base
 
-The indexed ChromaDB collection currently contains 1,746 documents/chunks.
+The current evaluation knowledge base contains financial reports for:
 
-The source PDFs and generated ChromaDB files are intentionally excluded from Git tracking through .gitignore.
-Retrieval System
+Apple — Fiscal Year 2025
+Microsoft — Fiscal Year 2025
+NVIDIA — Fiscal Year 2026
 
-FinRAG-AI implements three retrieval approaches.
+The indexed ChromaDB collection currently contains approximately 1,746 document chunks.
+
+The application retrieves financial evidence from these indexed documents before generating an answer.
+
+🔎 Retrieval Pipeline
+
+FinRAG AI uses multiple retrieval strategies.
 
 1. Vector Search
 
-Semantic retrieval is performed using embeddings and ChromaDB.
+Vector search represents the user query and document chunks as embeddings and retrieves semantically similar financial content.
 
-This allows the system to retrieve financially relevant passages even when the wording of the question differs from the wording in the source document.
+This helps when the wording of the question differs from the wording used in the financial report.
 
 2. BM25
 
-BM25 provides lexical retrieval based on keyword matching.
+BM25 provides lexical retrieval based on token-level matching.
 
-This is useful when queries contain specific financial terminology, company names, fiscal years, or financial metrics.
+This is particularly useful for:
 
-3. Hybrid RRF
+Company names
+Fiscal years
+Financial terminology
+Exact phrases
+Numerical concepts
 
-The hybrid retriever combines vector and BM25 rankings using Reciprocal Rank Fusion (RRF).
+The BM25 index is built once and reused during subsequent searches.
 
-The goal is to combine:
+3. Hybrid Retrieval
 
-semantic similarity from vector search
-lexical relevance from BM25
+The project combines vector and BM25 retrieval using Reciprocal Rank Fusion (RRF).
 
-This provides a second retrieval signal and improves robustness across different types of financial questions.
+This allows the system to benefit from both:
 
-Retrieval Evaluation
+semantic similarity
+exact lexical matching
 
-The retrieval system was evaluated using 9 financial questions.
+The hybrid retriever is the primary retrieval strategy used by the application.
 
-The evaluation checks whether the retrieved result belongs to the expected company and fiscal year.
+⚡ Retrieval Performance
 
-### Retrieval Accuracy
+Warm retrieval benchmarks were performed against the 1,746-document-chunk knowledge base.
 
-| Retriever     | Top-1 | Top-3 | Top-5 |
-|---------------|------:|------:|------:|
-| Vector Search | **100.00%** | **100.00%** | **100.00%** |
-| BM25          | 77.78% | 88.89% | 88.89% |
-| Hybrid RRF    | **100.00%** | **100.00%** | **100.00%** |
+Vector Retrieval
+Metric    Result
+Mean    18.73 ms
+Median    17.94 ms
+Minimum    12.28 ms
+Maximum    25.56 ms
+P95    25.62 ms
+Warm Hybrid Retrieval
+Metric    Result
+Mean    21.38 ms
+Median    19.30 ms
+Minimum    16.93 ms
+Maximum    29.88 ms
+P95    30.64 ms
+BM25 Internal Profile
 
-### Hybrid Retrieval Quality
+The optimized in-memory BM25 index was profiled internally:
 
-A separate Hybrid RRF quality evaluation measures precision and ranking quality:
+Operation    Time
+Tokenization    0.01 ms
+BM25 scoring    2.20 ms
+Top-k sorting    0.48 ms
+Result construction    0.01 ms
+Total measured    2.70 ms
 
-| Metric | Result |
-|--------|-------:|
-| Precision@1 | **100.00%** |
-| Precision@3 | 88.89% |
-| Precision@5 | 88.89% |
-| MRR | **1.0000** |
+The BM25 index is reused rather than rebuilt for every query.
 
-The Hybrid RRF retriever ranked the expected company/year evidence at **rank 1 for all 9 evaluation questions**, resulting in an MRR of 1.0000.
+🤖 LLM Generation
 
-Some Top-3 and Top-5 results contained documents from another company. These represent minor retrieval contamination, but they did not prevent the correct evidence from being ranked first.
+FinRAG AI uses:
 
-### Interpretation
+Gemini 2.5 Flash
 
-Vector Search achieved perfect retrieval accuracy across all evaluated cutoff levels.
+The generation pipeline is designed to answer using the retrieved financial context.
 
-Hybrid RRF also achieved:
+The system instructs the model to:
 
-- 100% Top-1
-- 100% Top-3
-- 100% Top-5
+Use the retrieved financial information
+Avoid inventing financial figures
+Provide the requested financial answer
+State when the information is unavailable from the retrieved documents
+Include source information for retrieved evidence
 
-BM25 performed well but was less reliable on several questions.
+This grounding strategy helps reduce unsupported financial claims.
 
-For the current 9-question evaluation set, Vector Search and Hybrid RRF tie for the best Top-5 retrieval accuracy at 100%.
+📊 LLM Evaluation
 
-The complete retrieval results are stored in:
+The project includes an automated LLM evaluation set containing 9 financial questions.
 
-evaluation/retrieval_results.json
+The evaluation checks:
 
-The detailed Hybrid RRF quality evaluation confirms that the correct evidence is consistently ranked first, while also making minor cross-company retrieval contamination visible.
+Whether the expected company and fiscal year appear in the retrieved sources
+Whether the expected answer appears in the generated response
 
-## LLM Evaluation
+Latest evaluation result:
 
-FinRAG-AI also evaluates the generated answers using a dedicated LLM evaluation pipeline.
+Metric    Result
+Questions evaluated    9
+Grounded answers    9/9
+Grounding score    100%
+Correct answers    9/9
+Answer score    100%
+Rate-limit errors    0
+Other errors    0
+Total retries    1
 
-The evaluation considers whether the generated answer:
+The evaluation completed successfully and saved results to:
 
-- contains the expected financial answer
-- is grounded in retrieved context
-- avoids unsupported financial claims
-- provides relevant source information
+evaluation/llm_results.json
 
-### LLM Evaluation Results
+One Gemini rate-limit event occurred during Question 7, after which the application successfully retried the request.
 
-The current LLM evaluation contains 9 financial questions.
+🧪 Evaluation Questions
 
-| Metric | Result |
-|--------|-------:|
-| Evaluation questions | **9** |
-| Grounded answers | **9/9 (100.00%)** |
-| Answer matches | **9/9 (100.00%)** |
-| Errors | **0** |
-| Grounding rate | **100.00%** |
-| Answer accuracy | **100.00%** |
+The evaluation covers financial questions involving:
 
-The LLM evaluation achieved **100.00% grounding** and **100.00% answer accuracy** across all 9 evaluation questions, with **zero evaluation errors**.
+Apple revenue
+Apple operating expenses
+Apple net income
+Microsoft revenue
+Microsoft operating income
+Microsoft net income
+NVIDIA revenue
+NVIDIA R&D expenses
+NVIDIA operating expenses
 
-Evaluation artifacts are stored in:
+Example:
 
-- `evaluation/context_results.json`
-- `evaluation/llm_results.json`
-
-The evaluation questions are stored in:
-
-`evaluation/questions.json`
-
-Grounded Answering
-
-The generator is designed to answer using retrieved financial context.
-
-When the required information is not available in the retrieved documents, the system is instructed to state that the information is unavailable rather than inventing a financial figure.
-
-For example, when asked:
-
-What was Tesla's total revenue in fiscal year 2025?
-
-the system correctly responded that the information was not available in the retrieved documents because the current corpus contains financial information for Apple, Microsoft, and NVIDIA.
-
-This behavior is important for financial applications because unsupported numerical claims can be misleading.
-
-Example Questions
-Apple
 What was Apple's total net sales in fiscal year 2025?
 
-Example answer:
+Expected answer:
 
-Apple's total net sales in fiscal year 2025 was
-$416,161 million.
-Microsoft
-What was Microsoft's total revenue in fiscal year 2025?
+$416,161 million
 
-Example answer:
+The system successfully returned the expected answer with supporting Apple 2025 source chunks.
 
-Microsoft's total revenue in fiscal year 2025 was
-$281,724 million.
-NVIDIA
-What was NVIDIA's revenue in fiscal year 2026?
+🖥️ User Interface
 
-Example answer:
+FinRAG AI provides a Streamlit web interface.
 
-NVIDIA's revenue in fiscal year 2026 was
-$215,938 million.
+The interface allows users to:
 
-The CLI also displays the retrieved source documents and chunks used for the answer.
+Enter financial questions
+Retrieve relevant financial evidence
+Generate grounded answers
+View source information
+Submit feedback
 
-Project Structure
+The application is exposed on:
+
+http://localhost:8501
+📈 Monitoring and Feedback
+
+The project includes a monitoring module:
+
+monitoring/
+├── dashboard.py
+├── feedback.py
+└── __init__.py
+
+The application also includes feedback collection through the Streamlit interface.
+
+Feedback and monitoring are intended to provide a foundation for tracking system behavior and improving retrieval and generation quality over time.
+
+📥 Ingestion Pipeline
+
+The project includes scripts for processing the source documents.
+
+The ingestion workflow is:
+
+Source Documents
+       ↓
+Document Loading
+       ↓
+Text Extraction
+       ↓
+Cleaning
+       ↓
+Chunking
+       ↓
+Metadata
+       ↓
+Embeddings
+       ↓
+ChromaDB
+
+Important project directories include:
+
+data/
+├── raw/
+├── processed/
+├── chunks/
+└── metadata/
+
+The ingestion and retrieval components are implemented as Python modules and scripts so the knowledge base can be rebuilt when the source documents change.
+
+🗂️ Project Structure
 FinRAG-AI/
 │
-├── README.md
-├── .gitignore
+├── app/
+│   └── streamlit_app.py
 │
 ├── data/
+│   ├── raw/
+│   ├── processed/
+│   ├── chunks/
 │   └── metadata/
-│       └── documents.csv
 │
 ├── evaluation/
 │   ├── questions.json
 │   ├── retrieval_evaluation.py
-│   ├── retrieval_results.json
 │   ├── context_evaluation.py
-│   ├── context_results.json
 │   ├── llm_evaluation.py
-│   └── llm_results.json
+│   └── *.json
 │
 ├── llm/
-│   ├── __init__.py
 │   └── generator.py
 │
+├── monitoring/
+│   ├── dashboard.py
+│   ├── feedback.py
+│   └── __init__.py
+│
 ├── rag/
-│   ├── __init__.py
-│   ├── retriever.py
+│   ├── pipeline.py
 │   ├── bm25_retriever.py
 │   ├── hybrid_retriever.py
-│   └── pipeline.py
+│   ├── embedding.py
+│   ├── vector_store.py
+│   └── chunker.py
 │
-└── scripts/
-    ├── ask_finrag.py
-    ├── ingest.py
-    ├── chunk_documents.py
-    ├── build_embeddings.py
-    └── build_vector_db.py
+├── scripts/
+│   ├── ingest.py
+│   └── ...
+│
+├── Dockerfile
+├── docker-compose.yml
+├── docker-entrypoint.sh
+├── requirements.txt
+├── .dockerignore
+├── .gitignore
+└── README.md
+🐳 Containerization
 
-Technologies
-Python
-Google Gemini 2.5 Flash
+FinRAG AI is containerized using Docker.
+
+The project uses:
+
+Python 3.11
+Docker
+Docker Compose
+Streamlit
 ChromaDB
-Sentence embeddings
-BM25
-Reciprocal Rank Fusion (RRF)
-JSON
-Git / GitHub
-Setup
-1. Clone the repository
-git clone https://github.com/jcdumlao14/FinRAG-AI.git
-cd FinRAG-AI
+Gemini 2.5 Flash
 
-2. Create a virtual environment
+The main application is defined in:
 
-Windows PowerShell:
+Dockerfile
+docker-compose.yml
 
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-3. Install dependencies
+Docker Compose exposes Streamlit on port:
 
-Install the project's required Python packages in the virtual environment.
+8501
 
-4. Configure the Gemini API key
+ChromaDB data is persisted through the Docker volume:
 
-Create a .env file:
+chroma_data
+⚙️ Installation
+Prerequisites
 
-GEMINI_API_KEY=your_api_key_here
+Install:
 
-The .env file is excluded from Git tracking.
+Git
+Docker Desktop
+Docker Compose
 
-Building the Data Pipeline
+A Google Gemini API key is required for LLM generation.
 
-The project provides scripts for the document processing pipeline.
+🔐 Environment Variables
 
-Ingest documents
-python ".\scripts\ingest.py"
-Chunk documents
-python ".\scripts\chunk_documents.py"
-Build embeddings
-python ".\scripts\build_embeddings.py"
-Build the vector database
-python ".\scripts\build_vector_db.py"
+Create a local .env file in the project root.
 
-These steps produce the processed document chunks, embeddings, and ChromaDB collection used by the retrieval system.
+Example:
 
-Ask FinRAG-AI a Question
+GOOGLE_API_KEY=your_google_api_key
 
-Run:
+Do not commit .env to GitHub.
 
-python ".\scripts\ask_finrag.py"
+The .env file contains secrets and should remain local.
 
-Then enter a financial question, for example:
+▶️ Running the Application
 
-What was Apple's total net sales in fiscal year 2025?
+From the project root:
 
-The application returns:
+docker compose build
+docker compose up -d
 
-The generated answer.
-Company and fiscal-year information when available.
-Retrieved source documents.
-Relevant chunk identifiers.
-Running Evaluation
-Retrieval evaluation
+Check the container:
+
+docker compose ps
+
+The application should be available at:
+
+http://localhost:8501
+
+To stop the application:
+
+docker compose down
+🔬 Running Evaluations
+LLM Evaluation
 
 Run:
 
-python ".\evaluation\retrieval_evaluation.py"
+docker compose exec finrag sh -c "PYTHONPATH=/app python evaluation/llm_evaluation.py"
 
-This evaluates:
+The evaluation reports:
 
-Vector Search
-BM25
-Hybrid RRF
+Grounding
+Expected answer matching
+Evaluation success
+Retry information
+Final evaluation summary
+Retrieval Evaluation
 
-at:
+The repository includes retrieval evaluation scripts for assessing the retrieval pipeline.
 
-Top-1
-Top-3
-Top-5
+The project evaluates multiple retrieval approaches, including:
 
-The results are saved to:
-
-evaluation/retrieval_results.json
-Context evaluation
-
-Run:
-
-python ".\evaluation\context_evaluation.py"
-
-Results are stored in:
-
-evaluation/context_results.json
-LLM evaluation
-
-Run:
-
-python ".\evaluation\llm_evaluation.py"
-
-Results are stored in:
-
-evaluation/llm_results.json
-Evaluation Philosophy
-
-The project evaluates the RAG pipeline at multiple stages rather than evaluating only the final generated answer.
-Document
-   |
-   v
-Retrieval
-   |
-   +--> Vector Search evaluation
-   |
-   +--> BM25 evaluation
-   |
-   +--> Hybrid RRF evaluation
-   |
-   v
-Retrieved Context
-   |
-   v
-LLM Generation
-   |
-   +--> Context grounding evaluation
-   |
-   +--> Answer matching evaluation
-   |
-   v
-Final Answer
-
-his makes it possible to distinguish between:
-
-retrieval failures
-context/grounding problems
-generation problems
-
-rather than treating every incorrect answer as an LLM problem.
-
-Limitations
-
-The current implementation has several limitations.
-
-Limited corpus
-
-The current dataset contains financial reports for only three companies:
-
-Apple
-Microsoft
-NVIDIA
-
-Therefore, questions about companies outside the corpus may not be answerable.
-
-Small evaluation set
-
-Retrieval performance is currently measured using 9 evaluation questions.
-
-Although the current results are strong, a larger evaluation dataset would provide a more reliable estimate of general retrieval performance.
-
-Financial-document scope
-
-The system is designed around the currently indexed financial reports and should not be treated as a general financial advisor.
-
-External knowledge
-
-The system is intentionally grounded in retrieved documents and does not attempt to supplement missing financial information from external sources.
-
-Future Improvements
-
-Potential improvements include:
-
-Expand the financial-document corpus.
-Increase the evaluation dataset.
-Add reranking models after initial retrieval.
-Tune RRF parameters.
-Add retrieval latency measurements.
-Add answer-generation latency measurements.
-Add automated evaluation dashboards.
-Add more detailed citation tracking.
-Add an interactive web interface.
-Add Docker deployment.
-Add monitoring and observability.
-Compare additional embedding models.
-Evaluate retrieval performance on more complex multi-document questions.
-Project Status
-
-Status: Completed core RAG pipeline and evaluation
-
-Current implementation includes:
-
-Document ingestion
-Text processing
-Chunking
-Embedding generation
-ChromaDB vector storage
 Vector retrieval
 BM25 retrieval
-Hybrid RRF retrieval
-Gemini 2.5 Flash generation
-Source reporting
-Retrieval evaluation
-Context evaluation
-LLM evaluation
-Grounded-answer behavior
-Evaluation result persistence
-Current retrieval benchmark
+Hybrid retrieval
 
-Best Top-5 Accuracy: 100.00%
+This allows the retrieval strategies to be compared rather than relying on a single retrieval method.
 
-Achieved by:
+🔁 Reproducibility
 
-Vector Search
-Hybrid RRF
+The application is designed to be reproducible through Docker Compose.
 
-on the current 9-question evaluation set.
+The main dependencies are specified in:
 
-LLM Zoomcamp 2026
+requirements.txt
 
-This project was developed as part of the LLM Zoomcamp 2026 learning and project work, with a focus on applying Retrieval-Augmented Generation techniques to a practical financial research use case.
+The Docker environment uses:
 
-Author
+python:3.11-slim
+
+The source financial documents used to build the knowledge base are organized under the project's data directories.
+
+To reproduce the application:
+
+git clone https://github.com/jcdumlao14/FinRAG-AI.git
+cd FinRAG-AI
+docker compose build
+docker compose up -d
+
+Then open:
+
+http://localhost:8501
+🏆 Evaluation Criteria Coverage
+
+The project was designed around the DataTalksClub LLM Zoomcamp capstone requirements.
+
+Requirement    Implementation
+Problem description    Financial research and retrieval problem clearly defined
+Knowledge base    Financial 10-K reports
+Retrieval flow    Vector + BM25 + Hybrid RRF
+LLM generation    Gemini 2.5 Flash
+Retrieval evaluation    Vector, BM25 and Hybrid evaluation
+LLM evaluation    Automated 9-question evaluation
+Interface    Streamlit
+Ingestion    Python ingestion pipeline
+Monitoring    Monitoring module + feedback collection
+Containerization    Dockerfile + Docker Compose
+Reproducibility    Docker-based setup and requirements
+Hybrid search    Vector + BM25 + RRF
+Document re-ranking    RRF-based rank fusion
+Query rewriting    Not currently implemented
+Additional embedding model    Not currently implemented
+Cloud deployment    Not currently implemented
+
+The project prioritizes a complete, working RAG system over adding experimental features immediately before the deadline.
+
+🧠 Design Decisions
+Why Hybrid Search?
+
+Financial questions frequently contain exact entities, fiscal years, financial terms, and numerical concepts.
+
+BM25 is strong at lexical matching, while vector retrieval captures semantic similarity.
+
+Combining them improves retrieval robustness.
+
+Why RRF?
+
+Reciprocal Rank Fusion provides a simple and effective method for combining rankings produced by different retrieval systems without requiring their raw scores to be directly comparable.
+
+Why Gemini 2.5 Flash?
+
+Gemini 2.5 Flash provides a practical balance between response quality and latency for the final answer-generation stage.
+
+Why ChromaDB?
+
+ChromaDB provides a lightweight vector database suitable for storing and retrieving the document embeddings used by the application.
+
+🛡️ Grounding and Reliability
+
+FinRAG AI is designed to reduce hallucination risk by providing retrieved financial evidence to the LLM.
+
+The application does not treat the LLM as the primary source of financial facts.
+
+Instead:
+
+User Question
+     ↓
+Retrieve Evidence
+     ↓
+Build Context
+     ↓
+LLM Generation
+     ↓
+Grounded Answer
+     ↓
+Sources
+
+The evaluation results provide evidence that the current evaluation questions were answered correctly and with expected source grounding.
+
+⚠️ Current Limitations
+
+The current version intentionally focuses on a strong and reproducible core RAG architecture.
+
+The following features are not currently implemented:
+
+Cloud deployment
+Dedicated neural document reranker
+Query rewriting
+Multiple embedding-model comparison
+Major architectural redesign
+Additional financial datasets
+Alternative LLM evaluation methodology
+Major UI redesign
+
+These are potential future improvements rather than requirements for the current working system.
+
+🚀 Future Improvements
+
+Possible future development includes:
+
+Cloud deployment
+Neural document re-ranking
+Query rewriting
+Evaluation of alternative embedding models
+Larger financial datasets
+Additional evaluation metrics
+More advanced monitoring dashboards
+Improved user feedback analysis
+Authentication and multi-user support
+Production deployment and scaling
+📌 Key Results
+
+The current FinRAG AI system demonstrates:
+
+1,746 indexed document chunks
+Hybrid vector + BM25 retrieval
+RRF rank fusion
+Warm hybrid retrieval mean: 21.38 ms
+Vector retrieval mean: 18.73 ms
+BM25 internal measured time: 2.70 ms
+9/9 grounded evaluation questions
+100% grounding score
+9/9 correct answers
+100% answer score
+Streamlit interface
+Docker Compose deployment
+User feedback capability
+Monitoring module
+Source-aware financial answers
+👩‍💻 Author
 
 Jocelyn C. Dumlao
 
-Data Science / Machine Learning
+Data Scientist | Kaggle GrandMaster
 
 GitHub:
 
 https://github.com/jcdumlao14
 
+Project:
+
+https://github.com/jcdumlao14/FinRAG-AI
+
+📄 License
+
+This project is intended for educational and portfolio purposes as part of the LLM Zoomcamp capstone project.
+
+🙏 Acknowledgments
+
+This project was developed as part of the DataTalksClub LLM Zoomcamp and applies concepts from the course including:
+
+Retrieval-Augmented Generation
+Vector Search
+BM25
+Hybrid Search
+Reciprocal Rank Fusion
+LLM evaluation
+Docker
+Application monitoring
+
+⭐ FinRAG AI
+
+Search financial evidence. Retrieve the right context. Generate grounded answers.
