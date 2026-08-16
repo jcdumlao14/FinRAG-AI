@@ -17,5 +17,18 @@ services:
 
     restart: unless-stopped
 
+  monitoring:
+    build:
+      context: .
+      dockerfile: Dockerfile.monitoring
+
+    ports:
+      - "8502:8502"
+
+    volumes:
+      - ./monitoring:/app/monitoring
+
+    restart: unless-stopped
+
 volumes:
   chroma_data:
